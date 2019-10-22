@@ -9,11 +9,10 @@ export default class BruteForceProvider {
   /** Main Function **/
 
   public init() {
-    const initLetter = this.omega[0];
-    console.log(initLetter)
+    const firstLetterOfOmega = this.omega[0];
 
     for(let i=0;i<this.hashCount;i++) {
-      this.passwordTable.push(initLetter);
+      this.passwordTable.push(fistLetterOfOmega);
     }
   }
 
@@ -23,15 +22,6 @@ export default class BruteForceProvider {
 
     return newPass.join().replace(/[.\,$+]/g, '');
   }
-
-  /** End Main **/
-  /*
-  public test(): void {
-    const omega = 'abcdef0123456789';
-    const target = './source/WebTarget.zip';
-    const passwordTable = [];
-    const hashCount = 32;
-  }*/
 
   public bruteForce(password: string): void {
     const tryPasswordBruteForce = spawn('7z', [`${this.target}`, `-P${password}`]);
@@ -48,6 +38,8 @@ export default class BruteForceProvider {
       console.log(`child process exited with code ${code}`);
     });
   }
+
+  /** End Main **/
 
   /*
   private assignANewValueToPasswordArrayIndex(
