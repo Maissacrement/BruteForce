@@ -6,15 +6,15 @@ export default class BruteForceService {
   private hashCount: number;
   public passwordTable: string[] = [];
 
-  /*
-    @params:
-      - ensembleOfLetter: string
-          description: Interval of letter you want use
-      - pathFileToBruteForce: string
-          description: path where is defined the target bruteforce file
-      - hashLength: number
-          description: password length
-  */
+   /**
+    * @params:
+    *   - ensembleOfLetter: string
+    *       description: Interval of letter you want use
+    *   - pathFileToBruteForce: string
+    *       description: path where is defined the target bruteforce file
+    *   - hashLength: number
+    *       description: password length
+    */
   constructor(
     private readonly ensembleOfLetter = 'abcdef0123456789',
     private readonly pathFileToBruteForce = './source/WebTarget.zip',
