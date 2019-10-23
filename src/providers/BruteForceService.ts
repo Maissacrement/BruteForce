@@ -35,27 +35,38 @@ export default class BruteForceService {
     }
   }
 
-  public getCurrentPassword(): string {
-    const newPass = this.passwordTable;
-
-    return newPass.join().replace(/[.\,$+]/g, '');
-  }
-
   public bruteForce() {
     const passwordLength = this.passwordTable.length - 1;
     const omegaLength = this.omega.length - 1;
-    let i = 0;
+    let arrayPosition = 0, i = 0;
 
-    while(i < 10) {
-      const password = this.getCurrentPassword();
-      this._7zTryFindPassword( password );
-      this.chageValueOfPasswordTableIndex(
-        0, passwordLength, omegaLength, i
+    this._chageValueOfPasswordTableIndex(0, passwordLength, omegaLength, i);
+
+    while(i < 19) {
+      console.log('i,', i, 'omegaLength: ', (i % (omegaLength + 1)))
+      if( (i % (omegaLength + 1)) == 0 && i !=0 ) {
+        console.log('hello');
+        const newIndex = (passwordLength - arrayPosition) % passwordLength
+        this.passwordTable[30] = this.omega[1];
+        console.log(this.passwordTable);
+        arrayPosition += 1;
+      }
+      this._chageValueOfPasswordTableIndex(
+        arrayPosition, passwordLength, omegaLength, i
       );
-
-      console.log(password);
+      const password = this._getCurrentPassword();
+      console.log('test', password);
+      this._7zTryFindPassword( password );
       i++;
     }
+  }
+
+  /** End Main **/
+
+  private _getCurrentPassword(): string {
+    const newPass = this.passwordTable;
+
+    return newPass.join().replace(/[.\,$+]/g, '');
   }
 
 
@@ -76,11 +87,10 @@ export default class BruteForceService {
     });
   }
 
-  /** End Main **/
-  private chageValueOfPasswordTableIndex(
+  private _chageValueOfPasswordTableIndex(
     previousIndex: number, passLength: number,
     omegaLength: number, newIndex: number,
   ): void {
-    this.passwordTable[(passLength - previousIndex) % ( passLength + 1 )] = this.omega[newIndex % omegaLength];
+    this.passwordTable[(passLength - previousIndex) % ( passLength + 1 )] = this.omega[newIndex % ( omegaLength + 1 )];
   }
 }
