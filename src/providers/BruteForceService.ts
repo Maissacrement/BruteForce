@@ -1,10 +1,29 @@
 const { spawn } = require('child_process');
 
-export default class BruteForceProvider {
-  private omega: string  = 'abcdef0123456789';
-  private target: string ='./source/WebTarget.zip';
+export default class BruteForceService {
+  private omega: string;
+  private target: string ;
+  private hashCount: number;
   public passwordTable: string[] = [];
-  private hashCount: number = 32;
+
+  /*
+    @params:
+      - ensembleOfLetter: string
+          description: Interval of letter you want use
+      - pathFileToBruteForce: string
+          description: path where is defined the target bruteforce file
+      - hashLength: number
+          description: password length
+  */
+  constructor(
+    private readonly ensembleOfLetter = 'abcdef0123456789',
+    private readonly pathFileToBruteForce = './source/WebTarget.zip',
+    private readonly hashLength = 32,
+  ) {
+    this.omega = ensembleOfLetter;
+    this.target = pathFileToBruteForce;
+    this.hashCount = hashLength;
+  }
 
   /** Main Function **/
 
@@ -24,12 +43,15 @@ export default class BruteForceProvider {
 
   public bruteForce() {
     const passwordLength = this.passwordTable.length - 1;
+    const omegaLength = this.omega.length - 1;
     let i = 0;
 
     while(i < 10) {
       const password = this.getCurrentPassword();
-      this.chageValueOfPasswordTableIndex(0, passwordLength, i)
       this._7zTryFindPassword( password );
+      this.chageValueOfPasswordTableIndex(
+        0, passwordLength, omegaLength, i
+      );
 
       console.log(password);
       i++;
@@ -56,8 +78,9 @@ export default class BruteForceProvider {
 
   /** End Main **/
   private chageValueOfPasswordTableIndex(
-    previousIndex: number, passLength: number, newIndex: number,
+    previousIndex: number, passLength: number,
+    omegaLength: number, newIndex: number,
   ): void {
-    this.passwordTable[(passLength - previousIndex) % ( passLength + 1 )] = this.omega[newIndex];
+    this.passwordTable[(passLength - previousIndex) % ( passLength + 1 )] = this.omega[newIndex % omegaLength];
   }
 }

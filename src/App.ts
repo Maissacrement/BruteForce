@@ -1,10 +1,14 @@
-import BruteForceProvider from './providers/BruteForceProvider';
+import BruteForceService from './providers/BruteForceService';
 
 const main = () => {
-  const bruteForceProvider = new BruteForceProvider();
+  const bruteForceService = new BruteForceService();
 
-  bruteForceProvider.init();
-  bruteForceProvider.bruteForce();
+  bruteForceService.init();
+  bruteForceService.bruteForce(/*
+    ensembleOfLetter='abcdef0123456789',
+    pathFileToBruteForce='./source/WebTarget.zip',
+    hashLength=32,
+  */);
 };
 
 main();
